@@ -5,7 +5,6 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 10
     groups:
       react:
         patterns:
@@ -22,12 +21,6 @@ updates:
           - "typescript"
           - "typescript-eslint"
           - "tslib"
-      tailwindcss:
-        patterns:
-          - "tailwindcss"
-          - "@tailwindcss/*"
-          - "autoprefixer"
-          - "postcss"
       eslint:
         patterns:
           - "eslint"
@@ -36,6 +29,6 @@ updates:
     ignore:
       # Ignore major version bumps for React to avoid breaking changes
       - dependency-name: "react"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "react-dom"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
