@@ -85,6 +85,33 @@
   width: 100%;
 }
 
+.scenario-slider-row__value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scenario-slider-row__input {
+  width: 64px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  text-align: right;
+}
+
+.scenario-slider-row__input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.scenario-slider-row__percent {
+  color: var(--text-h);
+  font-size: 14px;
+}
+
 .metrics-section__header h2 {
   margin-bottom: 6px;
 }

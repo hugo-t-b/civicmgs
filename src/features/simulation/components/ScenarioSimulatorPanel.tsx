@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 interface ScenarioSimulatorPanelProps {
   populationChange: number
   onPopulationChange: (value: number) => void
@@ -14,22 +16,60 @@ interface SliderRowProps {
 }
 
 function SliderRow({ label, value, onChange }: SliderRowProps) {
+  const [textValue, setTextValue] = useState<string | null>(null);
+
+  const handleFocus = () => {
+    setTextValue(value === 0 ? "" : String(value));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setTextValue(val);
+
+    const num = Number(val);
+    if (!isNaN(num)) {
+      onChange(Math.max(-20, Math.min(20, num)));
+    }
+  };
+
+  const handleBlur = () => {
+    if (textValue === "" || textValue === null) {
+      onChange(0);
+    }
+    setTextValue(null); // go back to controlled display mode
+  };
+
   return (
     <div className="scenario-slider-row">
       <div className="scenario-slider-row__top">
         <label>{label}</label>
-        <span>{value}%</span>
+
+        <div className="scenario-slider-row__value">
+          <input
+            type="number"
+            min={-20}
+            max={20}
+            step={1}
+            value={textValue ?? value}
+            onFocus={handleFocus}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className="scenario-slider-row__input"
+          />
+          <span className="scenario-slider-row__percent">%</span>
+        </div>
       </div>
+
       <input
         type="range"
         min={-20}
         max={20}
         step={1}
         value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
+        onChange={(e) => onChange(Number(e.target.value))}
       />
     </div>
-  )
+  );
 }
 
 export function ScenarioSimulatorPanel({
