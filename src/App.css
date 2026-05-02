@@ -74,6 +74,24 @@
   width: 100%;
 }
 
+.scenario-slider-row input[type='number'] {
+  appearance: textfield;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1em;
+  margin-right: 1ch;
+  padding: 0.5em;
+  text-align: right;
+  width: 5ch;
+
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
 .metrics-section__header h2 {
   margin-bottom: 6px;
 }

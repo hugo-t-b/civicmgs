@@ -1,3 +1,6 @@
+import { clamp } from '@utils'
+import { useState, type ChangeEvent, type FocusEvent } from 'react'
+
 interface SimulatorPanelProps<T extends Record<string, number>> {
   simulatedChanges: T
   onSimulationChange: (value: T) => void
@@ -11,25 +14,72 @@ interface SliderRowProps {
 }
 
 function SliderRow({ label, value, onChange }: SliderRowProps) {
-  const id = `slider-${label.toLowerCase()}`
+  const MIN = -20
+  const MAX = 20
+  const STEP = 0.1
+
+  const [tempValue, setTempValue] = useState<number | "">(value)
+
+  const handleBoxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.value) {
+      setTempValue("")
+      return
+    }
+
+    const value = event.target.valueAsNumber
+
+    setTempValue(value)
+
+    if (value >= MIN && value <= MAX) {
+      onChange(value)
+    }
+  }
+
+  const handleBoxBlur = (event: FocusEvent<HTMLInputElement>) => {
+    const value = event.target.valueAsNumber
+    const correctedValue = Number.isNaN(value) ? 0 : Math.round(clamp(value, MIN, MAX) * 10) / 10
+
+    setTempValue(correctedValue)
+    onChange(correctedValue)
+  }
+
+  const handleSliderChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.valueAsNumber
+    setTempValue(value)
+    onChange(value)
+  }
 
   return (
-    <div className="scenario-slider-row">
+    <fieldset className="scenario-slider-row">
       <div className="scenario-slider-row__top">
-        <label htmlFor={id}>{label} change</label>
-        <span>{value}%</span>
+        <legend>{label} change</legend>
+
+        <div>
+          <input
+            type="number"
+            min={MIN}
+            max={MAX}
+            step={STEP}
+            value={tempValue}
+            id={`box-${label.toLowerCase()}`}
+            onChange={handleBoxChange}
+            onBlur={handleBoxBlur}
+          />
+
+          <span>%</span>
+        </div>
       </div>
 
       <input
         type="range"
-        min={-20}
-        max={20}
-        step={1}
+        min={MIN}
+        max={MAX}
+        step={STEP}
         value={value}
-        id={id}
-        onChange={(event) => onChange(Number(event.target.value))}
+        id={`slider-${label.toLowerCase()}`}
+        onChange={handleSliderChange}
       />
-    </div>
+    </fieldset>
   )
 }
 
@@ -41,7 +91,7 @@ export function SimulatorPanel<T extends Record<string, number>>({
   const handleChange = (metric: string, newValue: number) => {
     onSimulationChange({
       ...simulatedChanges,
-      [metric]: newValue
+      [metric]: Number.isNaN(newValue) ? 0 : newValue
     })
   }
 
