@@ -3,6 +3,7 @@ import type { CSSObjectWithLabel, StylesConfig } from 'react-select'
 import type { Location } from '@types'
 import { SA2_INFO_LINK } from '@data/abs'
 
+
 interface LocationSearchPanelProps {
   selectedLocation?: Location
   onSelectLocation: (location: Location) => void
@@ -40,6 +41,13 @@ const selectStyles: StylesConfig<SelectValue> = {
       borderColor: 'var(--border)',
       borderRadius: '8px',
       padding: '6px 6px',
+    }
+  },
+
+  option(baseStyles: CSSObjectWithLabel) {
+    return {
+      ...baseStyles,
+      color: '#6b6375',
     }
   }
 }
