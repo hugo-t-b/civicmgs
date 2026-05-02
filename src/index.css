@@ -103,3 +103,8 @@ a {
     text-decoration: underline;
   }
 }
+
+fieldset {
+  all: unset;
+  width: 100%;
+}
