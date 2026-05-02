@@ -78,6 +78,7 @@
   appearance: textfield;
   border: 1px solid var(--border);
   border-radius: 8px;
+  font-family: inherit;
   font-size: 1em;
   margin-right: 1ch;
   padding: 0.5em;
