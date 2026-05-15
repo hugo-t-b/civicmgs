@@ -2,5 +2,8 @@
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "ignorePatterns": ["src/data/abs/*.json"],
   "arrowParens": "avoid",
-  "sortImports": true
+  "sortImports": true,
+  "sortPackageJson": {
+    "sortScripts": true
+  }
 }
